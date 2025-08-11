@@ -5,10 +5,13 @@ import { Ionicons } from "@expo/vector-icons";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
+import { Provider } from "react-redux";
 import CategoriesScreen from "./screens/CategoriesScreen";
 import CategoryDetail from "./screens/CategoryDetail";
 import FavoritesScreens from "./screens/FavoritesScreens";
 import MealsOverviewScreen from "./screens/MealsOverviewScreen";
+import store from "./store/redux/store";
+
 const Stack = createNativeStackNavigator();
 
 function DrawerNavigator() {
@@ -47,10 +50,22 @@ function DrawerNavigator() {
 
 export default function App() {
   return (
-    <View style={styles.container}>
-      <StatusBar style="dark" />
+
+    <Provider store={store}>
+       <View style={styles.container}>
+      <StatusBar style="light" />
       <NavigationContainer>
-        <Stack.Navigator >
+        <Stack.Navigator 
+        screenOptions={{
+          headerStyle: {
+            backgroundColor: "#351401",
+          },
+          headerTintColor: "white",
+          contentStyle: {
+            backgroundColor: "#3f2f25",
+          },
+        }}
+        >
           <Stack.Screen
             name="Drawer"
             component={DrawerNavigator}
@@ -62,7 +77,9 @@ export default function App() {
           <Stack.Screen name="CategoryDetail" component={CategoryDetail} />
         </Stack.Navigator>
       </NavigationContainer>
-    </View>
+        </View>
+    </Provider>
+   
   );
 }
 
